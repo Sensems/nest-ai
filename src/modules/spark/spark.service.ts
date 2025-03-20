@@ -41,9 +41,7 @@ export class SparkService {
       .post(
         sparkApiUrl,
         {
-          model: '4.0Ultra',
-          temperature: 0.7,
-          max_tokens: 1000,
+          ...this.publicReqParams,
           messages: aiRequestDto.messages,
           stream: false,
         },
@@ -83,9 +81,7 @@ export class SparkService {
         .post(
           sparkApiUrl,
           {
-            model: '4.0Ultra',
-            temperature: 0.7,
-            max_tokens: 1000,
+            ...this.publicReqParams,
             messages: aiRequestDto.messages,
             stream: true,
           },
