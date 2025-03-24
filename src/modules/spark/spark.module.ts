@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
-import { SparkService } from './spark.service';
-import { SparkController } from './spark.controller';
 import { HttpModule } from '@nestjs/axios';
+import { SparkService } from './spark.service';
+import { MessagesModule } from '../messages/messages.module';
+import { SparkController } from './spark.controller';
 
 @Module({
-  imports: [HttpModule],
+  imports: [HttpModule, MessagesModule],
   controllers: [SparkController],
   providers: [SparkService],
 })

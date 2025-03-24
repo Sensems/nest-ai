@@ -96,7 +96,6 @@ export class SparkService {
         )
         .subscribe({
           next: (response) => {
-            console.log('response.request', response.request);
             // 获取事件流
             const eventStream = response.data;
             let buffer = '';
