@@ -22,6 +22,7 @@ import appConfig from './config/app.config';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         uri: configService.get<string>('MONGODB_URI'),
+        dbName: configService.get<string>('MONGODB_DATABASE'),
       }),
     }),
     SparkModule,
