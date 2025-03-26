@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # 安装生产依赖（跳过 devDependencies）
-RUN npm ci --omit=dev
+RUN npm install --production
 
 # 复制所有源代码
 COPY . .
