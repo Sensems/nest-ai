@@ -1,26 +1,31 @@
-# 使用 Node.js 官方镜像作为基础镜像
+# 第一阶段: 构建阶段
+FROM node:20-alpine as builder
+
+# 安装 pnpm
+RUN npm install -g pnpm
+
+WORKDIR /usr/src/app
+
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
+
+COPY . .
+RUN pnpm run build
+
+# 第二阶段: 生产阶段
 FROM node:20-alpine
 
-# 设置工作目录
-WORKDIR /app
+RUN npm install -g pnpm
 
-# 复制 package.json 和 package-lock.json
-COPY package*.json ./
+WORKDIR /usr/src/app
 
-# 安装 NestJS CLI
-RUN npm add -g @nestjs/cli
+# 从构建阶段复制必要文件
+COPY --from=builder /usr/src/app/node_modules ./node_modules
+COPY --from=builder /usr/src/app/dist ./dist
+COPY package.json ./
 
-# 安装生产依赖（跳过 devDependencies）
-RUN npm install --production
+# 只安装生产依赖
+RUN pnpm prune --prod
 
-# 复制所有源代码
-COPY . .
-
-# 构建项目（如果使用了 TypeScript 需要编译）
-# RUN npm run build
-
-# 暴露应用端口（与 NestJS 的端口一致）
 EXPOSE 3000
-
-# 启动命令
-CMD ["npm", "run", "start"]
+CMD ["pnpm", "run", "start:prod"]
