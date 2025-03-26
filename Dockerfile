@@ -7,13 +7,11 @@ WORKDIR /app
 # 复制 package.json 和 package-lock.json
 COPY package*.json ./
 
-# 安装 pnpm
-RUN npm install -g pnpm
 # 安装 NestJS CLI
-RUN pnpm add -g @nestjs/cli
+RUN npm add -g @nestjs/cli
 
 # 安装生产依赖（跳过 devDependencies）
-RUN pnpm install --production
+RUN npm install --production
 
 # 复制所有源代码
 COPY . .
@@ -25,4 +23,4 @@ COPY . .
 EXPOSE 3000
 
 # 启动命令
-CMD ["pnpm", "start"]
+CMD ["npm", "run", "start"]
