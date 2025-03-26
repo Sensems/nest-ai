@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # NestJS 应用服务
   app:
