@@ -9,6 +9,7 @@ WORKDIR /usr/src/app
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
+COPY .env .ent.* ./
 COPY . .
 RUN pnpm run build
 
@@ -23,6 +24,7 @@ WORKDIR /usr/src/app
 COPY --from=builder /usr/src/app/node_modules ./node_modules
 COPY --from=builder /usr/src/app/dist ./dist
 COPY package.json ./
+COPY .env .ent.* ./
 
 # 只安装生产依赖
 RUN pnpm prune --prod
