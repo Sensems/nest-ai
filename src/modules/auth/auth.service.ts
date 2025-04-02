@@ -25,14 +25,14 @@ export class AuthService {
 
   async login(loginUserDto: LoginUserDto) {
     const user = await this.validateUser(
-      loginUserDto.username,
+      loginUserDto.email,
       loginUserDto.password,
     );
     if (!user) {
-      throw new UnauthorizedException('无效的用户名或密码');
+      throw new UnauthorizedException('无效的邮箱或密码');
     }
 
-    const payload = { username: user.username, sub: user._id };
+    const payload = { email: user.email, sub: user._id };
     return {
       access_token: this.jwtService.sign(payload),
       user: {

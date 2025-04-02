@@ -12,7 +12,10 @@ import { SparkService } from './spark.service';
 import { MessagesService } from '../messages/messages.service';
 import { AiRequestDto } from './dto/ai-request.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { firstValueFrom } from 'rxjs';
 
+@ApiTags('spark 对话')
 @UseGuards(JwtAuthGuard)
 @Controller('spark')
 export class SparkController {
@@ -22,12 +25,15 @@ export class SparkController {
   ) {}
 
   @Post('/notSteamChat')
-  notSteamcCat(@Body() aiRequestDto: AiRequestDto) {
-    return this.sparkService.chat(aiRequestDto);
+  @ApiOperation({ summary: '非流式对话' })
+  async notSteamcCat(@Body() aiRequestDto: AiRequestDto) {
+    const response = await firstValueFrom(this.sparkService.chat(aiRequestDto));
+    return response;
   }
 
   // 新增：流式响应端点
   @Post('conversations/:conversationId/spark/steamChat')
+  @ApiOperation({ summary: '流式对话' })
   async steamChat(
     @Request() req,
     @Res() response: Response,
