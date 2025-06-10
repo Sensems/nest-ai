@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { swaggerConfig } from './config/swagger.config';
 import { ValidationPipe } from '@nestjs/common';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,6 +17,9 @@ async function bootstrap() {
 
   // 全局响应拦截器
   app.useGlobalInterceptors(new TransformInterceptor());
+
+  // // 全局异常过滤器
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   // 获取 ConfigService 实例
   const configService = app.get(ConfigService);

@@ -11,8 +11,8 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(username: string, password: string): Promise<any> {
-    const user = await this.usersService.findOne(username);
+  async validateUser(email: string, password: string): Promise<any> {
+    const user = await this.usersService.findOne(email);
     if (user && (await bcrypt.compare(password, user.password))) {
       // 将 Mongoose 文档转换为普通对象
       const userObject = JSON.parse(JSON.stringify(user));

@@ -34,8 +34,10 @@ export class ConversationsController {
 
   @Post('findAll')
   @ApiOperation({ summary: '获取所有对话' })
-  async findAll(@Request() req, @Body() body) {
-    const result = await this.conversationsService.findAll(req.user._id, body);
+  async findAll(@Request() req) {
+    console.log('req.user._id', req.user._id);
+    const result = await this.conversationsService.findAll(req.user._id);
+    console.log('result', result);
     return result;
   }
 

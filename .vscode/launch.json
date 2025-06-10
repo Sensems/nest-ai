@@ -1,0 +1,14 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+	  {
+		"name": "debug nestjs",
+		"request": "launch",
+		"runtimeArgs": ["run", "start:debug"],
+		"runtimeExecutable": "npm",
+		"skipFiles": ["<node_internals>/**"],
+		"type": "node"
+	  }
+	]
+  }
+  

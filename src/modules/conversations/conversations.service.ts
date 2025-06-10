@@ -27,7 +27,16 @@ export class ConversationsService {
     return newConversation.save();
   }
 
-  async findAll(userId: string, query): Promise<PaginatedData<Conversation>> {
+  async findAll(userId: string): Promise<Conversation[]> {
+    return this.conversationModel.find({
+      userId: new Types.ObjectId(userId),
+    });
+  }
+
+  async findByPage(
+    userId: string,
+    query,
+  ): Promise<PaginatedData<Conversation>> {
     // 获取分页参数，默认每页10条，第1页
     const page = parseInt(query?.page as string) || 1;
     const limit = parseInt(query?.pageSize as string) || 10;

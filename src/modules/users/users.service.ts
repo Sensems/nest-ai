@@ -37,8 +37,8 @@ export class UsersService {
     return newUser.save();
   }
 
-  async findOne(username: string): Promise<User> {
-    const user = await this.userModel.findOne({ username });
+  async findOne(email: string): Promise<User> {
+    const user = await this.userModel.findOne({ email });
     if (!user) {
       throw new NotFoundException('用户不存在');
     }
